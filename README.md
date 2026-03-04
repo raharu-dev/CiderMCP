@@ -4,7 +4,7 @@ This is a project to allow LLMs connect to Cider.sh music app.
 I don't really have a big experience in Python or MCP so this project is going to be a nice study.
 Overall I will be guiding myself by using the repo below.
 So this repo will be my personal journal of my journey with Python and MCP.
-The MCP will be tested using local instance of Qwen3.5 9B in LM Studio.
+The MCP was tested using local instance of Qwen3.5 9B in LM Studio and MCP Inspector.
 ## Planned MCP Tools
 - Play, Pause
 - Set Volume
