@@ -44,24 +44,26 @@ def check_status():
 # GENERAL PLAYBACK CONTROLS
 #
 
-# Toggle playback
+# Set playback mode
 @mcp.tool()
-def toggle_playback():
-    """Toggle the playback status of the music player"""
-    response = requests.post(API_URL + "playback/playpause", headers=TOKEN_HEADER)
+def set_playback(mode: str):
+    """Set the playback mode of the music player (on, off)"""
+    node_mapping={
+        "off": 0,
+        "on": 1
+    }
+    # Get current shuffle mode to know if we need to toggle
+    response = requests.get(API_URL + "playback/is-playing", headers=TOKEN_HEADER)
     if response.status_code == 200:
-        response = requests.get(API_URL + "playback/is-playing", headers=TOKEN_HEADER)
-        if response.status_code == 200:
-            is_playing = response.json().get("is_playing")
-            if is_playing:
-                return {"status": "Playback started."}
+        # XOR Current State with Desired State in order to set right mode
+        if response.json().get("is_playing") ^ node_mapping.get(mode):
+            response = requests.post(API_URL+"playback/playpause", headers=TOKEN_HEADER)
+            if response.status_code == 200:
+                return {"status": "Succesfully changed playback mode to "+mode}
             else:
-                return {"status": "Playback paused."}
-        else:
-            return {"error": "Playback status is unknown."}
-            
-    else:
-        return {"error": "Failed to toggle playback."}
+                return {"status": "Couldn't change playback mode"}
+        return {"status": "Requested playback mode is already "+mode}
+    return {"error": "Couldn't get current state of playback"}
 
 # Get Volume
 @mcp.tool()
@@ -85,7 +87,6 @@ def set_volume(level: float):
         return {"status": f"Volume set to {level}."}
     else:
         return {"error": "Failed to set volume."}
-
 
 # Get Repeat Mode
 @mcp.tool()
@@ -139,7 +140,6 @@ def get_shuffle():
     else:
         return {"error": "Failed to get current shuffle mode."}
 # Set Shuffle Mode
-# SET xor CURRENT = Right State
 @mcp.tool()
 def set_shuffle(mode: str):
     """Set the shuffle mode of the music player (on, off)"""
@@ -150,6 +150,7 @@ def set_shuffle(mode: str):
     # Get current shuffle mode to know if we need to toggle
     response = requests.get(API_URL + "playback/shuffle-mode", headers=TOKEN_HEADER)
     if response.status_code == 200:
+        # XOR Current State with Desired State in order to set right mode
         if response.json().get("value") ^ node_mapping.get(mode):
             response = requests.post(API_URL+"playback/toggle-shuffle", headers=TOKEN_HEADER)
             if response.status_code == 200:
