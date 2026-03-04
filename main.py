@@ -143,18 +143,23 @@ def get_shuffle():
 @mcp.tool()
 def set_shuffle(mode: str):
     """Set the shuffle mode of the music player (on, off)"""
+    node_mapping={
+        "off": 0,
+        "on": 1
+    }
     # Get current shuffle mode to know if we need to toggle
     response = requests.get(API_URL + "playback/shuffle-mode", headers=TOKEN_HEADER)
     if response.status_code == 200:
-        if response.json().get("value") ^ enabled:
+        if response.json().get("value") ^ node_mapping.get(mode):
             response = requests.post(API_URL+"playback/toggle-shuffle", headers=TOKEN_HEADER)
-            if response.status_code != 200:
-                return {"error": "Failed to set shuffle mode."}
-    return {"status": "Succesfully changed shuffle mode to {enabled}"}
+            if response.status_code == 200:
+                return {"status": "Succesfully changed shuffle mode to "+mode}
+            else:
+                return {"status": "Couldn't change shuffle mode"}
+        return {"status": "Requested shuffle mode is already "+mode}
+    return {"error": "Couldn't get current state of shuffle"}
         
             
-
-
 if __name__ == "__main__":
     # mcp.run(transport="streamable-http")
     mcp.run()
