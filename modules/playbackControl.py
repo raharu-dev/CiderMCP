@@ -28,10 +28,10 @@ def register_tools(mcp, API_URL, TOKEN_HEADER):
             if response.json().get("is_playing") ^ node_mapping.get(mode):
                 response = requests.post(API_URL+"playback/playpause", headers=TOKEN_HEADER)
                 if response.status_code == 200:
-                    return {"status": "Succesfully changed playback mode to "+mode}
+                    return {"status": f"Succesfully changed playback mode to {mode}"}
                 else:
                     return {"status": "Couldn't change playback mode"}
-            return {"status": "Requested playback mode is already "+mode}
+            return {"status": f"Playback mode was already set to {mode}"}
         return {"error": "Couldn't get current state of playback"}
 
     ## Skipping tracks
@@ -100,8 +100,8 @@ def register_tools(mcp, API_URL, TOKEN_HEADER):
         if response.status_code == 200:
             current_mode = response.json().get("value")
             target_mode = mode_mapping.get(mode)
-            if target_mode is None:
-                return {"error": "Invalid repeat mode. Use 'off', 'track', or 'all'."}
+            if current_mode == target_mode:
+                return {"status": f"Repeat mode was already set to {mode}"}
             # Calculate how many times we need to cycle the repeat mode
             toggles_needed = (target_mode - current_mode) % 3
             for _ in range(toggles_needed):
@@ -142,7 +142,7 @@ def register_tools(mcp, API_URL, TOKEN_HEADER):
                     return {"status": f"Succesfully changed shuffle mode to {mode}"}
                 else:
                     return {"status": "Couldn't change shuffle mode"}
-            return {"status": f"Requested shuffle mode is already {mode}"}
+            return {"status": f"Shuffle mode was already set to {mode}"}
         return {"error": "Couldn't get current state of shuffle"}
 
     ## AUTOPLAY MODES
@@ -175,5 +175,5 @@ def register_tools(mcp, API_URL, TOKEN_HEADER):
                     return {"status": f"Succesfully changed autoplay mode to {mode}"}
                 else:
                     return {"status": "Couldn't change autoplay mode"}
-            return {"status": f"Requested autoplay mode is already {mode}"}
+            return {"status": f"Autoplay mode was already set to {mode}"}
         return {"error": "Couldn't get current state of autoplay"}
