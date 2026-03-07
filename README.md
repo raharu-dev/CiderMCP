@@ -1,24 +1,29 @@
 # Cider3MCP
-This is a project to allow LLMs connect to Cider.sh music app.
+Connect Cider with LLMs
 ## Overview
-I don't really have a big experience in Python or MCP so this project is going to be a nice study.
-Overall I will be guiding myself by using the repo below.
-So this repo will be my personal journal of my journey with Python and MCP.
-The MCP was tested using local instance of Qwen3.5 9B in LM Studio and MCP Inspector.
+MCP server that allows [Cider](https://cider.sh/) (Apple Music client) to be controlled by LLM clients (i.e. Claude Code, LM Studio).
+This might increase accessibility of Cider client through LLM interactions or just be a fun way to control your music.
+## Features (MCP Tools)
+- Get Cider API status
+### Playback Controls
+- Get/Set Playback Mode (Playing/Paused)
+- Skip songs (forward/backwards certain amount of songs)
+- Get/Set Volume (0.0 - 1.0)
+- Get/Set Repeat Mode (OFF/TRACK/ALL)
+- Get/Set Shuffle Mode (ON/OFF)
+- Get/Set Autoplay Mode (ON/OFF)
 ## Planned MCP Tools
-- Play, Pause
-- Set Volume
-- Shuffle, Loop, Autoplay
-
+### Queue Management
 - Get Queue
-- Move Queue Position
+- Move position in Queue
 - Remove from Queue
 - Clear Queue
-
+### Other features
 - Add Song/Album (URL/HREF/ID)
 - Get Lyrics
 - Search (/api/v1/amapi)
 ## How to install
+`CIDER_HOST` and `CIDER_PORT` are optional it should work without providing them, however if you port changes or if you want to control it from another PC it might be useful.
 Github version:
 ```json
 {
@@ -32,8 +37,9 @@ Github version:
         "main.py"
       ],
       "env": {
-        "CIDER_TOKEN": "CIDER-API-TOKEN",
-        "CIDER_PORT": "10767"
+        "CIDER_HOST": "localhost",
+        "CIDER_PORT": "10767",
+        "CIDER_TOKEN": "CIDER-API-TOKEN"
       }
     }
   }

@@ -11,19 +11,24 @@ from mcp.server.fastmcp import FastMCP
 CIDER_TOKEN=os.environ.get("CIDER_TOKEN")
 if not CIDER_TOKEN:
     CIDER_TOKEN=""
+CIDER_HOST=os.environ.get("CIDER_HOST")
+if not CIDER_HOST:
+    CIDER_HOST="localhost"
 CIDER_PORT=os.environ.get("CIDER_PORT")
 if not CIDER_PORT:
     CIDER_PORT="10767"
 
+
 # Actually used variables for connection to Cider API
-API_URL="http://localhost:"+CIDER_PORT+"/api/v1/"
+API_URL="http://"+CIDER_HOST+":"+CIDER_PORT+"/api/v1/"
 TOKEN_HEADER = { "apptoken": CIDER_TOKEN }
 
 # Create MCP server
 mcp = FastMCP("Cider-Music", json_response=True)
 
 # Importing Modules
-from modules.playbackControl import register_tools
+from modules.playbackControl import ModulePlayback
+from modules.queueManagement import ModuleQueue
 
 # Check Cider status
 @mcp.tool()
@@ -45,7 +50,8 @@ def status_check():
             return {"error": "Cider is not open or not responding. Check if Cider have Web API enabled and if the port is correct."}
 
 # Register tools from modules
-register_tools(mcp, API_URL+"playback/", TOKEN_HEADER)
+ModulePlayback(mcp, API_URL+"playback/", TOKEN_HEADER)
+ModuleQueue(mcp, API_URL, TOKEN_HEADER)
 
 if __name__ == "__main__":
     # mcp.run(transport="streamable-http")

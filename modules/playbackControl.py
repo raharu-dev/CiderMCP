@@ -1,6 +1,6 @@
 import requests
 
-def register_tools(mcp, API_URL, TOKEN_HEADER):
+def ModulePlayback(mcp, API_URL, TOKEN_HEADER):
     ## PLAYBACK CONTROL
     # Get playback mode
     @mcp.tool()
@@ -177,3 +177,5 @@ def register_tools(mcp, API_URL, TOKEN_HEADER):
                     return {"status": "Couldn't change autoplay mode"}
             return {"status": f"Autoplay mode was already set to {mode}"}
         return {"error": "Couldn't get current state of autoplay"}
+    
+
