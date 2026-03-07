@@ -1,4 +1,4 @@
-# Cider3MCP
+# CiderMCP
 Connect Cider with LLMs
 ## Overview
 MCP server that allows [Cider](https://cider.sh/) (Apple Music client) to be controlled by LLM clients (i.e. Claude Code, LM Studio).
