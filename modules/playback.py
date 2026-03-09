@@ -1,6 +1,6 @@
 import requests
 
-def ModulePlayback(mcp, API_URL, TOKEN_HEADER):
+def playbackTool(mcp, API_URL, TOKEN_HEADER):
     ## PLAYBACK CONTROL
     # Get playback mode
     @mcp.tool()

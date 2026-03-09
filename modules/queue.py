@@ -1,6 +1,6 @@
 import requests
 
-def ModuleQueue(mcp, API_URL, TOKEN_HEADER):
+def queueTool(mcp, API_URL, TOKEN_HEADER):
 
     # _songId
     # albumName

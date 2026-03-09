@@ -27,8 +27,9 @@ TOKEN_HEADER = { "apptoken": CIDER_TOKEN }
 mcp = FastMCP("Cider-Music", json_response=True)
 
 # Importing Modules
-from modules.playbackControl import ModulePlayback
-from modules.queueManagement import ModuleQueue
+from modules.playback import playbackTool
+from modules.queue import queueTool
+from modules.lyrics import lyricsTool
 
 # Check Cider status
 @mcp.tool()
@@ -50,8 +51,9 @@ def status_check():
             return {"error": "Cider is not open or not responding. Check if Cider have Web API enabled and if the port is correct."}
 
 # Register tools from modules
-ModulePlayback(mcp, API_URL+"playback/", TOKEN_HEADER)
-ModuleQueue(mcp, API_URL, TOKEN_HEADER)
+playbackTool(mcp, API_URL+"playback/", TOKEN_HEADER)
+queueTool(mcp, API_URL, TOKEN_HEADER)
+lyricsTool(mcp,API_URL,TOKEN_HEADER)
 
 if __name__ == "__main__":
     # mcp.run(transport="streamable-http")
