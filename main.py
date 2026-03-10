@@ -8,16 +8,18 @@ import requests
 from mcp.server.fastmcp import FastMCP
 
 # Get env arguments
-CIDER_TOKEN=os.environ.get("CIDER_TOKEN")
+CIDER_TOKEN=os.environ.get("CIDER_TOKEN") # TOKEN
 if not CIDER_TOKEN:
     CIDER_TOKEN=""
-CIDER_HOST=os.environ.get("CIDER_HOST")
+CIDER_HOST=os.environ.get("CIDER_HOST") # ADDRESS
 if not CIDER_HOST:
     CIDER_HOST="localhost"
-CIDER_PORT=os.environ.get("CIDER_PORT")
+CIDER_PORT=os.environ.get("CIDER_PORT") # PORT
 if not CIDER_PORT:
     CIDER_PORT="10767"
-
+AM_STOREFRONT=os.environ.get("AM_STOREFRONT") # AM API Country Code
+if not AM_STOREFRONT:
+    AM_STOREFRONT="ca"
 
 # Actually used variables for connection to Cider API
 API_URL="http://"+CIDER_HOST+":"+CIDER_PORT+"/api/v1/"
@@ -29,7 +31,8 @@ mcp = FastMCP("Cider-Music", json_response=True)
 # Importing Modules
 from modules.playback import playbackTool
 from modules.queue import queueTool
-from modules.lyrics import lyricsTool
+# from modules.lyrics import lyricsTool
+from modules.amapi import amapiTool
 
 # Check Cider status
 @mcp.tool()
@@ -53,7 +56,8 @@ def status_check():
 # Register tools from modules
 playbackTool(mcp, API_URL+"playback/", TOKEN_HEADER)
 queueTool(mcp, API_URL, TOKEN_HEADER)
-lyricsTool(mcp,API_URL,TOKEN_HEADER)
+# lyricsTool(mcp,API_URL,TOKEN_HEADER)
+amapiTool(mcp, API_URL, TOKEN_HEADER, AM_STOREFRONT)
 
 if __name__ == "__main__":
     # mcp.run(transport="streamable-http")

@@ -9,6 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-# Files used for testing
-test.py
-queue.json
+# Files used for testing / prototyping
+testing/

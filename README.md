@@ -20,10 +20,13 @@ This might increase accessibility of Cider client through LLM interactions or ju
 - Clear Queue
 ### Other features
 - Add Song/Album (URL/HREF/ID)
-- Get Lyrics
+- Get Lyrics *[Currently not implementing due to API not being finished]*
 - Search (/api/v1/amapi)
 ## How to install
-`CIDER_HOST` and `CIDER_PORT` are optional it should work without providing them, however if you port changes or if you want to control it from another PC it might be useful.
+- `CIDER_TOKEN` - Websocket API token, without the token it most probably won't work even if requirement is disabled
+- `CIDER_HOST` - `default: localhost` **OPTIONAL** Sets websocket address, might be useful when trying to control from different device
+- `CIDER_PORT`- `default: 10767` **OPTIONAL** Sets websocket port, usage similar as above
+- `AM_STOREFRONT` - `default: ca` **OPTIONAL** Sets storefront used by amapi module for requests outside Cider (i.e. "ca", "pl", "de")
 Github version:
 ```json
 {
@@ -37,9 +40,10 @@ Github version:
         "main.py"
       ],
       "env": {
+        "CIDER_TOKEN": "CIDER-API-TOKEN",
         "CIDER_HOST": "localhost",
         "CIDER_PORT": "10767",
-        "CIDER_TOKEN": "CIDER-API-TOKEN"
+        "AM_STOREFRONT": "Country Code"
       }
     }
   }

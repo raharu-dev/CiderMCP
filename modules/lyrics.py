@@ -1,5 +1,6 @@
 import requests
-
+# Currently planned to implement when the API gets finished. 
+# (Unless I get it to work through AM API or something else)
 def lyricsTool(mcp, API_URL, TOKEN_HEADER):
     # Getting whole lyrics
     @mcp.tool()
